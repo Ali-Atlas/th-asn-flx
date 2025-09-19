@@ -2,26 +2,11 @@
 
 import { ConnectWallet } from '@/components/wallet/ConnectWallet';
 import { useWallet } from '@/hooks/useWallet';
-import { getAllTokenData } from '@/lib/api/rpc';
-import { useEffect } from 'react';
-import { getTokenPrices } from '@/lib/api/coingecko';
-import { ERC20_ADDRESSES } from '@/lib/constants/tokens';
+import { useTokenBalances } from '@/hooks/useTokenBalances';
 
 export default function Home() {
   const { isConnected } = useWallet();
-  const { address } = useWallet();
-
-  useEffect(() => {
-    if (isConnected && address) {
-      Promise.all([
-        getAllTokenData(address as Address),
-        getTokenPrices(['0xETH', ...ERC20_ADDRESSES] as any)
-      ]).then(([tokens, prices]) => {
-        console.log('Tokens:', tokens);
-        console.log('Prices:', prices);
-      });
-    }
-  }, [isConnected, address]);
+  const { largeBalances, smallBalances, smallBalancesTotal, isLoading, error } = useTokenBalances();
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -31,16 +16,35 @@ export default function Home() {
           <ConnectWallet />
         </header>
         
-        <section className="flex justify-center items-center h-[60vh]">
-          {isConnected ? (
-            <div className="text-gray-500">
-              {/* Token list will go here */}
-              <p className="animate-pulse">Loading tokens...</p>
-            </div>
-          ) : (
+        <section className="flex justify-center items-center min-h-[60vh]">
+          {!isConnected ? (
             <div className="text-center">
               <p className="text-gray-500 mb-2">Connect your wallet to view your token portfolio</p>
               <p className="text-xs text-gray-400">Supports MetaMask and WalletConnect</p>
+            </div>
+          ) : isLoading ? (
+            <div className="text-gray-500">
+              <p className="animate-pulse">Loading your tokens...</p>
+            </div>
+          ) : error ? (
+            <div className="text-red-500">
+              <p>Error loading tokens: {error.message}</p>
+            </div>
+          ) : largeBalances.length === 0 && smallBalances.length === 0 ? (
+            <div className="text-gray-500">
+              <p>No tokens found in your wallet</p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+              {/* Token list will go here in next step */}
+              <p className="text-gray-600">
+                Found {largeBalances.length} tokens above $0.10
+              </p>
+              {smallBalances.length > 0 && (
+                <p className="text-gray-600">
+                  And {smallBalances.length} small balances totaling ${smallBalancesTotal.toFixed(2)}
+                </p>
+              )}
             </div>
           )}
         </section>
