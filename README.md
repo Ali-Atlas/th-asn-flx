@@ -1,6 +1,3 @@
-Looking at your file structure, I can see a few issues with the README. Here's the corrected version:
-
-```markdown
 # Token Portfolio Viewer
 
 A production-ready Ethereum token portfolio viewer built with Next.js, TypeScript, and Web3 technologies for a DeFi technical interview.
