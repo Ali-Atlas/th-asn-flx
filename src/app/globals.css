@@ -2,7 +2,14 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1e293b; 
+  --foreground: #1e293b;
+  
+  /* Design tokens for your app */
+  --modal-background: #F2F3F7;
+  --row-background: #FFFFFF;
+  --text-muted: #70737D;
+  --price-positive: #3EC786;
+  --price-negative: #F04438;
 }
 
 @theme inline {
@@ -18,17 +25,23 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Ensure minimum text contrast */
-* {
-  color: inherit;
+/* Custom utility classes */
+.bg-modal {
+  background-color: var(--modal-background);
 }
 
-/* Override any Tailwind utilities that make text too light */
-.text-gray-300, .text-gray-400, .text-gray-500,
-.text-slate-300, .text-slate-400, .text-slate-500 {
-  color: #64748b; /* Force to at least slate-500 darkness */
+.bg-row {
+  background-color: var(--row-background);
 }
 
-.text-gray-600, .text-slate-600 {
-  color: #475569; /* Force to slate-600 */
+.text-muted-custom {
+  color: var(--text-muted) !important;
+}
+
+.text-positive {
+  color: var(--price-positive) !important;
+}
+
+.text-negative {
+  color: var(--price-negative) !important;
 }

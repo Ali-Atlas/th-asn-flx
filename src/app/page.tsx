@@ -26,22 +26,20 @@ export default function Home() {
   }, [refetch]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <main className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Token Portfolio
-          </h1>
-          <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-medium text-gray-900 tracking-tight">Token Portfolio</h1>
+          <div className="flex items-center gap-2">
             {isConnected && !isLoading && (
               <button
                 onClick={handleRefresh}
-                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 text-gray-400 hover:text-gray-600 transition-colors duration-150 rounded-lg hover:bg-gray-50"
                 aria-label="Refresh token data"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" 
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" 
                   />
                 </svg>
               </button>
@@ -49,7 +47,7 @@ export default function Home() {
             <ConnectWallet />
           </div>
         </header>
-        
+      
         <section className="relative min-h-[70vh] flex items-center justify-center">
           {!isConnected ? (
             <div className="text-center p-12 bg-white rounded-2xl shadow-sm">
