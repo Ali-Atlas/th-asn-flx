@@ -2,9 +2,18 @@
 
 import { ConnectWallet } from '@/components/wallet/ConnectWallet';
 import { useWallet } from '@/hooks/useWallet';
+import { getAllTokenData } from '@/lib/api/rpc';
+import { useEffect } from 'react';
 
 export default function Home() {
   const { isConnected } = useWallet();
+  const { address } = useWallet();
+  
+  useEffect(() => {
+    if (address) {
+      getAllTokenData(address).then(console.log);
+    }
+  }, [address]);
 
   return (
     <main className="min-h-screen bg-gray-50">
