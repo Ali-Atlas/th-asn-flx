@@ -31,6 +31,8 @@ export interface TokenBalancesState {
 
 export interface UseTokenBalancesReturn extends TokenBalancesState {
   refetch: () => void;
+  smallBalancesExpanded: boolean;
+  setSmallBalancesExpanded: (expanded: boolean) => void;
 }
 
 // For components
@@ -45,3 +47,4 @@ export interface SmallBalancesGroupProps {
   isExpanded: boolean;
   onToggle: () => void;
 }
+
