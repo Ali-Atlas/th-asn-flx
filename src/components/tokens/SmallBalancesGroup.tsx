@@ -49,8 +49,7 @@ export function SmallBalancesGroup({
       </button>
       
       {isExpanded && (
-        <div className="border-t border-gray-100">
-          {tokens.map((token) => (
+        <div className="border-t border-gray-100 max-h-64 overflow-y-auto">          {tokens.map((token) => (
             <div
               key={token.address}
               className="flex items-center justify-between py-3 px-4 hover:bg-gray-50"

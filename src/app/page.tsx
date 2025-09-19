@@ -27,7 +27,7 @@ export default function Home() {
           <ConnectWallet />
         </header>
         
-        <section className="flex justify-center items-center min-h-[60vh]">
+        <section className="relative min-h-[70vh] flex items-center justify-center">
           {!isConnected ? (
             <div className="text-center p-12 bg-white rounded-2xl shadow-sm">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
