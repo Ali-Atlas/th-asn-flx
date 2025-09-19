@@ -4,16 +4,24 @@ import { ConnectWallet } from '@/components/wallet/ConnectWallet';
 import { useWallet } from '@/hooks/useWallet';
 import { getAllTokenData } from '@/lib/api/rpc';
 import { useEffect } from 'react';
+import { getTokenPrices } from '@/lib/api/coingecko';
+import { ERC20_ADDRESSES } from '@/lib/constants/tokens';
 
 export default function Home() {
   const { isConnected } = useWallet();
   const { address } = useWallet();
-  
+
   useEffect(() => {
-    if (address) {
-      getAllTokenData(address).then(console.log);
+    if (isConnected && address) {
+      Promise.all([
+        getAllTokenData(address as Address),
+        getTokenPrices(['0xETH', ...ERC20_ADDRESSES] as any)
+      ]).then(([tokens, prices]) => {
+        console.log('Tokens:', tokens);
+        console.log('Prices:', prices);
+      });
     }
-  }, [address]);
+  }, [isConnected, address]);
 
   return (
     <main className="min-h-screen bg-gray-50">
