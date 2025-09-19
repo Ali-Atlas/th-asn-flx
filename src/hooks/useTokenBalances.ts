@@ -10,6 +10,7 @@ import type { TokenWithPrice, UseTokenBalancesReturn } from '@/lib/types/token';
 import type { TokenAddress } from '@/lib/types/coingecko';
 import type { Address } from 'viem';
 import { MOCK_TOKENS } from '@/lib/constants/mockData';
+import { getErrorMessage } from '@/lib/utils/errors';
 
 const SMALL_BALANCE_THRESHOLD = 0.10; // $0.10 USD
 

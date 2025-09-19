@@ -2,6 +2,7 @@ import { createPublicClient, http, type Address } from 'viem';
 import { mainnet } from 'viem/chains';
 import { RPC_URL, ERC20_ADDRESSES } from '../constants/tokens';
 import type { Token } from '../types/token';
+import { RPCError } from '../utils/errors';
 
 // ERC20 ABI - only the functions we need
 const ERC20_ABI = [
@@ -49,7 +50,7 @@ export async function getETHBalance(address: Address): Promise<bigint> {
     return await publicClient.getBalance({ address });
   } catch (error) {
     console.error('Error fetching ETH balance:', error);
-    return 0n;
+    throw new RPCError('Failed to fetch ETH balance');
   }
 }
 
@@ -96,7 +97,7 @@ export async function getTokenMetadata(tokenAddresses: Address[]): Promise<Map<A
     return metadata;
   } catch (error) {
     console.error('Error fetching token metadata:', error);
-    return new Map();
+    throw new RPCError('Failed to fetch token metadata');
   }
 }
 
@@ -126,7 +127,7 @@ export async function getTokenBalances(
     return balances;
   } catch (error) {
     console.error('Error fetching token balances:', error);
-    return new Map();
+    throw new RPCError('Failed to fetch token balances');
   }
 }
 
@@ -168,6 +169,6 @@ export async function getAllTokenData(userAddress: Address): Promise<Token[]> {
     return tokens;
   } catch (error) {
     console.error('Error fetching all token data:', error);
-    return [];
+    throw new RPCError('Failed to fetch token data. Please check your connection.');
   }
 }

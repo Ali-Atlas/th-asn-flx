@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Felix Interview",
-  description: "Live coding challenge",
+  title: "Token Portfolio Viewer",
+  description: "Ethereum mainnet token portfolio tracker",
 };
 
 export default function RootLayout({
@@ -18,11 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <div className="min-h-screen bg-gray-50">
-            {children}
-          </div>
-        </Providers>
+        <ErrorBoundary>
+          <Providers>
+            <div className="min-h-screen bg-gray-50">
+              {children}
+            </div>
+          </Providers>
+        </ErrorBoundary>
       </body>
     </html>
   );

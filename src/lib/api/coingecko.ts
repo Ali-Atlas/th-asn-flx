@@ -1,4 +1,5 @@
 import { COINGECKO_API_KEY } from '../constants/tokens';
+import { RateLimitError } from '../utils/errors';
 import type { 
   CoinGeckoPriceResponse, 
   CoinGeckoMarketData, 
@@ -79,6 +80,9 @@ export async function getTokenPrices(
     );
 
     if (!response.ok) {
+      if (response.status === 429) {
+        throw new RateLimitError('CoinGecko rate limit reached. Please wait a moment.');
+      }
       throw new Error(`CoinGecko API error: ${response.status}`);
     }
 
