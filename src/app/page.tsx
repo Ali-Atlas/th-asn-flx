@@ -2,6 +2,7 @@
 
 import { ConnectWallet } from '@/components/wallet/ConnectWallet';
 import { TokenList } from '@/components/tokens/TokenList';
+import { SkeletonLoader } from '@/components/ui/SkeletonLoader';
 import { useWallet } from '@/hooks/useWallet';
 import { useTokenBalances } from '@/hooks/useTokenBalances';
 
@@ -41,10 +42,7 @@ export default function Home() {
               <p className="text-sm text-gray-400">Ethereum Mainnet Only</p>
             </div>
           ) : isLoading ? (
-            <div className="text-center p-12">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-              <p className="mt-4 text-gray-600">Loading your tokens...</p>
-            </div>
+            <SkeletonLoader rows={4} />
           ) : error ? (
             <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
               <p className="text-red-600 flex items-center">
@@ -71,13 +69,15 @@ export default function Home() {
               <p className="text-sm text-gray-400 mt-2">Transfer some tokens to this address to get started</p>
             </div>
           ) : (
-            <TokenList
-              largeBalances={largeBalances}
-              smallBalances={smallBalances}
-              smallBalancesTotal={smallBalancesTotal}
-              smallBalancesExpanded={smallBalancesExpanded}
-              onToggleSmallBalances={() => setSmallBalancesExpanded(!smallBalancesExpanded)}
-            />
+            <div className="w-full max-w-2xl max-h-[80vh] overflow-y-auto">
+              <TokenList
+                largeBalances={largeBalances}
+                smallBalances={smallBalances}
+                smallBalancesTotal={smallBalancesTotal}
+                smallBalancesExpanded={smallBalancesExpanded}
+                onToggleSmallBalances={() => setSmallBalancesExpanded(!smallBalancesExpanded)}
+              />
+            </div>
           )}
         </section>
       </div>
