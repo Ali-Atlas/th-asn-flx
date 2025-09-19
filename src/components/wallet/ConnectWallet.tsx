@@ -4,10 +4,8 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useCallback, useMemo } from 'react';
 import { truncateAddress } from '@/lib/utils/format';
+import type { ConnectWalletProps } from '@/lib/types/wallet';
 
-interface ConnectWalletProps {
-  className?: string;
-}
 
 export function ConnectWallet({ className = '' }: ConnectWalletProps) {
   return (

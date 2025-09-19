@@ -1,11 +1,8 @@
 import type { TokenWithPrice } from '@/lib/types/token';
 import { formatUsdValue, formatPrice, formatPercentageChange } from '@/lib/utils/format';
 
-interface TokenRowProps {
-  token: TokenWithPrice;
-}
 
-export function TokenRow({ token }: TokenRowProps) {
+export function TokenRow({ token }: { token: TokenWithPrice }) {
   const priceChangeColor = token.priceChange24h >= 0 ? 'text-green-500' : 'text-red-500';
   
   return (

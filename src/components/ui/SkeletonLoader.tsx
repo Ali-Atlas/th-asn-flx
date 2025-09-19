@@ -1,6 +1,4 @@
-interface SkeletonLoaderProps {
-  rows?: number;
-}
+import type { SkeletonLoaderProps } from '@/lib/types/ui';
 
 export function SkeletonLoader({ rows = 3 }: SkeletonLoaderProps) {
   return (

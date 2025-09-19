@@ -6,3 +6,7 @@ export interface WalletState {
 }
 
 export type TruncatedAddress = string;
+
+export interface ConnectWalletProps {
+  className?: string;
+}

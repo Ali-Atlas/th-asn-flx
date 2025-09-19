@@ -12,7 +12,8 @@ export default function Home() {
   const { 
     largeBalances, 
     smallBalances, 
-    smallBalancesTotal, 
+    smallBalancesTotal,
+    totalPortfolioValue, 
     smallBalancesExpanded,
     setSmallBalancesExpanded,
     isLoading, 
@@ -67,15 +68,18 @@ export default function Home() {
           ) : error ? (
             <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
               <p className="text-red-600 flex items-center">
-                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" 
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" 
-                    clipRule="evenodd" 
-                  />
-                </svg>
-                Error loading tokens
+                {/* ... icon ... */}
+                {error.message.includes('network') || error.message.includes('fetch') 
+                  ? 'Network connection issue' 
+                  : 'Error loading tokens'}
               </p>
               <p className="text-sm text-red-500 mt-2">{error.message}</p>
+              <button 
+                onClick={() => refetch()}
+                className="mt-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Try Again
+              </button>
             </div>
           ) : largeBalances.length === 0 && smallBalances.length === 0 ? (
             <div className="bg-white rounded-xl shadow-sm p-12 text-center">
@@ -95,6 +99,7 @@ export default function Home() {
                 largeBalances={largeBalances}
                 smallBalances={smallBalances}
                 smallBalancesTotal={smallBalancesTotal}
+                totalPortfolioValue={totalPortfolioValue} // Add this
                 smallBalancesExpanded={smallBalancesExpanded}
                 onToggleSmallBalances={() => setSmallBalancesExpanded(!smallBalancesExpanded)}
               />

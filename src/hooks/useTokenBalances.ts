@@ -53,12 +53,11 @@ async function fetchTokenBalances(address: Address): Promise<TokenWithPrice[]> {
     .sort((a, b) => b.usdValue - a.usdValue);
 
   // Mock data for development
-  /*
   if (filtered.length === 0 && process.env.NODE_ENV === 'development') {
     console.log('Using mock data for UI testing');
     filtered = [...MOCK_TOKENS];
   }
-*/
+
   return filtered;
 }
 
@@ -70,10 +69,17 @@ export function useTokenBalances(): UseTokenBalancesReturn {
     queryKey: ['tokenBalances', address],
     queryFn: () => fetchTokenBalances(address as Address),
     enabled: isConnected && !!address,
-    refetchInterval: 30000, // Auto-refresh every 30 seconds
-    staleTime: 10000, // Consider data stale after 10 seconds
-    gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
-    retry: 3, // Retry failed requests 3 times
+    refetchInterval: 30000,
+    staleTime: 10000,
+    gcTime: 5 * 60 * 1000,
+    retry: (failureCount, error) => {
+      // Don't retry on network errors more than once
+      if (error instanceof Error && error.message.includes('network')) {
+        return failureCount < 1;
+      }
+      // Normal retry logic for other errors
+      return failureCount < 3;
+    },
     retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 

@@ -1,11 +1,4 @@
-import type { TokenWithPrice } from '@/lib/types/token';
-
-interface SmallBalancesGroupProps {
-  tokens: TokenWithPrice[];
-  totalValue: number;
-  isExpanded: boolean;
-  onToggle: () => void;
-}
+import type { SmallBalancesGroupProps, TokenWithPrice } from '@/lib/types/token';
 
 export function SmallBalancesGroup({ 
   tokens, 

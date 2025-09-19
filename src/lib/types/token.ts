@@ -33,14 +33,10 @@ export interface UseTokenBalancesReturn extends TokenBalancesState {
   refetch: () => void;
   smallBalancesExpanded: boolean;
   setSmallBalancesExpanded: (expanded: boolean) => void;
+  totalPortfolioValue: number;
 }
 
-// For components
-export interface TokenDisplayProps {
-  token: TokenWithPrice;
-  isLast?: boolean;
-}
-
+// Component props - only for complex components
 export interface SmallBalancesGroupProps {
   tokens: TokenWithPrice[];
   totalValue: number;
@@ -48,3 +44,11 @@ export interface SmallBalancesGroupProps {
   onToggle: () => void;
 }
 
+export interface TokenListProps {
+  largeBalances: TokenWithPrice[];
+  smallBalances: TokenWithPrice[];
+  smallBalancesTotal: number;
+  smallBalancesExpanded: boolean;
+  onToggleSmallBalances: () => void;
+  totalPortfolioValue: number;
+}
