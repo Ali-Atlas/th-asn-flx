@@ -5,6 +5,7 @@ import { TokenList } from '@/components/tokens/TokenList';
 import { SkeletonLoader } from '@/components/ui/SkeletonLoader';
 import { useWallet } from '@/hooks/useWallet';
 import { useTokenBalances } from '@/hooks/useTokenBalances';
+import { useCallback } from 'react';
 
 export default function Home() {
   const { isConnected } = useWallet();
@@ -15,8 +16,13 @@ export default function Home() {
     smallBalancesExpanded,
     setSmallBalancesExpanded,
     isLoading, 
-    error 
+    error,
+    refetch
   } = useTokenBalances();
+
+  const handleRefresh = useCallback(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -25,7 +31,22 @@ export default function Home() {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Token Portfolio
           </h1>
-          <ConnectWallet />
+          <div className="flex items-center gap-4">
+            {isConnected && !isLoading && (
+              <button
+                onClick={handleRefresh}
+                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                aria-label="Refresh token data"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+                  />
+                </svg>
+              </button>
+            )}
+            <ConnectWallet />
+          </div>
         </header>
         
         <section className="relative min-h-[70vh] flex items-center justify-center">

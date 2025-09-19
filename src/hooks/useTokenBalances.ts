@@ -53,11 +53,12 @@ async function fetchTokenBalances(address: Address): Promise<TokenWithPrice[]> {
     .sort((a, b) => b.usdValue - a.usdValue);
 
   // Mock data for development
+  /*
   if (filtered.length === 0 && process.env.NODE_ENV === 'development') {
     console.log('Using mock data for UI testing');
     filtered = [...MOCK_TOKENS];
   }
-
+*/
   return filtered;
 }
 
@@ -77,15 +78,17 @@ export function useTokenBalances(): UseTokenBalancesReturn {
   });
 
   // Memoize the filtered arrays to prevent unnecessary recalculations
-  const { largeBalances, smallBalances, smallBalancesTotal } = useMemo(() => {
+  const { largeBalances, smallBalances, smallBalancesTotal, totalPortfolioValue } = useMemo(() => {
     const large = tokens.filter(token => token.usdValue >= SMALL_BALANCE_THRESHOLD);
     const small = tokens.filter(token => token.usdValue < SMALL_BALANCE_THRESHOLD);
-    const total = small.reduce((sum, token) => sum + token.usdValue, 0);
+    const smallTotal = small.reduce((sum, token) => sum + token.usdValue, 0);
+    const portfolioTotal = tokens.reduce((sum, token) => sum + token.usdValue, 0);
     
     return {
       largeBalances: large,
       smallBalances: small,
-      smallBalancesTotal: total,
+      smallBalancesTotal: smallTotal,
+      totalPortfolioValue: portfolioTotal,
     };
   }, [tokens]);
 
@@ -99,5 +102,6 @@ export function useTokenBalances(): UseTokenBalancesReturn {
     refetch,
     smallBalancesExpanded,
     setSmallBalancesExpanded,
+    totalPortfolioValue,
   };
 }
