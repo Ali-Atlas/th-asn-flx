@@ -1,3 +1,5 @@
+Looking at your file structure, I can see a few issues with the README. Here's the corrected version:
+
 ```markdown
 # Token Portfolio Viewer
 
@@ -14,7 +16,7 @@ A production-ready Ethereum token portfolio viewer built with Next.js, TypeScrip
 - **Auto-refresh**: 30-second interval updates with manual refresh button
 
 ### UI/UX Implementation
-- **Design Matching**: recreation of Rabby wallet interface
+- **Design Matching**: Recreation of Rabby wallet interface
 - **Responsive Layout**: Mobile-friendly design with proper breakpoints
 - **Loading States**: Skeleton loaders during data fetching
 - **Error Boundaries**: Graceful error handling with user-friendly messages
@@ -61,14 +63,12 @@ A production-ready Ethereum token portfolio viewer built with Next.js, TypeScrip
 - **Custom Hooks**: Reusable logic extraction (useTokenBalances)
 
 ## Tech Stack
-- **Framework**: Next.js 15
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + CSS Variables
-- **Web3**: wagmi, viem, RainbowKit
-- **State Management**: TanStack Query (React Query)
-- **RPC**: Custom Ethereum RPC with multicall optimization
-- **API**: CoinGecko for price data
-- **Icons**: Font Awesome React
+- **Framework**: Next.js 15.5
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 4 + CSS Variables
+- **Web3**: wagmi 2.17, viem 2.37, RainbowKit 2.2
+- **State Management**: TanStack Query 5.89
+- **Icons**: Font Awesome React 3.0
 
 ## Getting Started
 
@@ -94,11 +94,13 @@ src/
 │   │   ├── TokenRow.tsx
 │   │   └── SmallBalancesGroup.tsx
 │   ├── wallet/           # Wallet connection
-│   │   └── ConnectWallet.tsx
+│   │   ├── ConnectWallet.tsx
+│   │   └── ErrorBoundary.tsx
 │   └── ui/              # Shared UI components
 │       └── SkeletonLoader.tsx
 ├── hooks/               # Custom React hooks
-│   └── useTokenBalances.ts
+│   ├── useTokenBalances.ts
+│   └── useWallet.ts
 ├── lib/                 # Utilities and API clients
 │   ├── api/            # RPC and CoinGecko clients
 │   │   ├── rpc.ts
@@ -110,11 +112,15 @@ src/
 │   ├── types/          # TypeScript type definitions
 │   │   ├── token.ts
 │   │   ├── wallet.ts
-│   │   └── coingecko.ts
+│   │   ├── coingecko.ts
+│   │   ├── ui.ts
+│   │   ├── cache.ts
+│   │   └── index.ts
 │   └── utils/          # Formatting, caching utilities
 │       ├── format.ts
 │       ├── cache.ts
-│       └── errors.ts
+│       ├── errors.ts
+│       └── wagmi.ts
 └── styles/
     └── globals.css     # CSS variables and global styles
 ```
