@@ -9,5 +9,5 @@ export const ERC20_ADDRESSES = [
   "0xdAC17F958D2ee523a2206206994597C13D831ec7", // USDT
 ] as const;
 
-export const RPC_URL = "https://eth.merkle.io";
-export const COINGECKO_API_KEY = "CG-WogDWzaAW7Y9aoorgK29J1sj";
+export const COINGECKO_API_KEY = process.env.NEXT_PUBLIC_COINGECKO_API_KEY || 'CG-WogDWzaAW7Y9aoorgK29J1sj';
+export const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || 'https://eth.merkle.io';
