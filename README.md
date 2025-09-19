@@ -61,7 +61,7 @@ A production-ready Ethereum token portfolio viewer built with Next.js, TypeScrip
 - **Custom Hooks**: Reusable logic extraction (useTokenBalances)
 
 ## Tech Stack
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS + CSS Variables
 - **Web3**: wagmi, viem, RainbowKit

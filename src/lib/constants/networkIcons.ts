@@ -5,8 +5,7 @@ export const NETWORK_ICONS: Record<string, string> = {
   
 };
 
-// Get network icon for a token
-export function getNetworkIcon(tokenSymbol: string, tokenAddress?: string): string | null {
-  // In the future, check the actual network based on tokenAddress or metadata and retrieve network icons from an appropriate source
+export function getNetworkIcon(): string | null {
+  // In the future, check the actual network based on tokenAddress or metadata
   return NETWORK_ICONS.ethereum;
 }

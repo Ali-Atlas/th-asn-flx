@@ -8,7 +8,7 @@ export const MOCK_TOKENS: TokenWithPrice[] = [
     name: 'Ethereum',
     decimals: 18,
     balance: 1000000000000000000n, // 1 ETH
-    formattedBalance: '1.0000',
+    formattedBalance: '1',  // Changed from '1.0000'
     price: 2435.50,
     priceChange24h: -2.3,
     usdValue: 2435.50,
@@ -20,7 +20,7 @@ export const MOCK_TOKENS: TokenWithPrice[] = [
     name: 'USD Coin',
     decimals: 6,
     balance: 500000000n, // 500 USDC
-    formattedBalance: '500.00',
+    formattedBalance: '500',  // Changed from '500.00'
     price: 1.00,
     priceChange24h: 0.1,
     usdValue: 500.00,

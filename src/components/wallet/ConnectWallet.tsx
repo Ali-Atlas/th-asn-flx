@@ -1,11 +1,7 @@
 'use client';
-
-import { useAccount, useDisconnect } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useCallback, useMemo } from 'react';
 import { truncateAddress } from '@/lib/utils/format';
 import type { ConnectWalletProps } from '@/lib/types/wallet';
-
 
 export function ConnectWallet({ className = '' }: ConnectWalletProps) {
   return (
@@ -39,7 +35,7 @@ export function ConnectWallet({ className = '' }: ConnectWalletProps) {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-150"
                   >
                     Connect Wallet
                   </button>
@@ -51,7 +47,7 @@ export function ConnectWallet({ className = '' }: ConnectWalletProps) {
                   <button
                     onClick={openChainModal}
                     type="button"
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                    className="px-4 py-2 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 transition-colors duration-150"
                   >
                     Wrong network
                   </button>
@@ -59,14 +55,14 @@ export function ConnectWallet({ className = '' }: ConnectWalletProps) {
               }
 
               return (
-                <div className="flex items-center gap-4">
-                  <span className="text-sm text-gray-600 font-mono">
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-500 font-mono">
                     {truncateAddress(account.address)}
                   </span>
                   <button
                     onClick={openAccountModal}
                     type="button"
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium"
+                    className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors duration-150"
                   >
                     Disconnect
                   </button>

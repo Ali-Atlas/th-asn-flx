@@ -5,7 +5,7 @@ import { getNetworkIcon } from '@/lib/constants/networkIcons';
 export function TokenRow({ token }: { token: TokenWithPrice }) {
   const priceChangeClass = token.priceChange24h >= 0 ? 'text-positive' : 'text-negative';
   
-  const networkIcon = getNetworkIcon(token.symbol, token.address);
+  const networkIcon = getNetworkIcon();
   
   return (
     <div className="flex items-center px-6 py-3.5 bg-row rounded-lg mb-2 mx-2">

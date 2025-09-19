@@ -10,13 +10,12 @@ import type { TokenWithPrice, UseTokenBalancesReturn } from '@/lib/types/token';
 import type { TokenAddress } from '@/lib/types/coingecko';
 import type { Address } from 'viem';
 import { MOCK_TOKENS } from '@/lib/constants/mockData';
-import { getErrorMessage } from '@/lib/utils/errors';
 
 const SMALL_BALANCE_THRESHOLD = 0.10; // $0.10 USD
 
 async function fetchTokenBalances(address: Address): Promise<TokenWithPrice[]> {
-  const allAddresses: TokenAddress[] = ['0xETH', ...ERC20_ADDRESSES as Address[]];
-  
+  const allAddresses: TokenAddress[] = ['0xETH', ...[...ERC20_ADDRESSES] as Address[]];
+
   // Fetch all data in parallel
   const [tokenData, priceData, logoData] = await Promise.all([
     getAllTokenData(address),
@@ -48,15 +47,9 @@ async function fetchTokenBalances(address: Address): Promise<TokenWithPrice[]> {
   });
 
   // Filter out zero balances and sort by USD value (descending)
-  let filtered = tokensWithPrices
-    .filter(token => token.balance > 0n) // Keep as bigint comparison
+  const filtered = tokensWithPrices
+    .filter(token => token.balance > BigInt(0))
     .sort((a, b) => b.usdValue - a.usdValue);
-
-  // Mock data for development
-  if (filtered.length === 0 && process.env.NODE_ENV === 'development') {
-    console.log('Using mock data for UI testing');
-    filtered = [...MOCK_TOKENS];
-  }
 
   return filtered;
 }
@@ -83,12 +76,21 @@ export function useTokenBalances(): UseTokenBalancesReturn {
     retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 
+  // Use mock data ONLY in development when wallet is NOT connected
+  const displayTokens = useMemo(() => {
+    if (!isConnected && process.env.NODE_ENV === 'development') {
+      console.log('Using mock data for UI testing');
+      return MOCK_TOKENS;
+    }
+    return tokens;
+  }, [tokens, isConnected]);
+
   // Memoize the filtered arrays to prevent unnecessary recalculations
   const { largeBalances, smallBalances, smallBalancesTotal, totalPortfolioValue } = useMemo(() => {
-    const large = tokens.filter(token => token.usdValue >= SMALL_BALANCE_THRESHOLD);
-    const small = tokens.filter(token => token.usdValue < SMALL_BALANCE_THRESHOLD);
+    const large = displayTokens.filter(token => token.usdValue >= SMALL_BALANCE_THRESHOLD);
+    const small = displayTokens.filter(token => token.usdValue < SMALL_BALANCE_THRESHOLD);
     const smallTotal = small.reduce((sum, token) => sum + token.usdValue, 0);
-    const portfolioTotal = tokens.reduce((sum, token) => sum + token.usdValue, 0);
+    const portfolioTotal = displayTokens.reduce((sum, token) => sum + token.usdValue, 0);
     
     return {
       largeBalances: large,
@@ -96,10 +98,10 @@ export function useTokenBalances(): UseTokenBalancesReturn {
       smallBalancesTotal: smallTotal,
       totalPortfolioValue: portfolioTotal,
     };
-  }, [tokens]);
+  }, [displayTokens]);
 
   return {
-    tokens,
+    tokens: displayTokens,
     largeBalances,
     smallBalances,
     smallBalancesTotal,

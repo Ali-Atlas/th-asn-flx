@@ -73,9 +73,11 @@ export function SmallBalancesGroup({
                     )}
                   </div>
                   {/* Network badge for expanded items too */}
-                  <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full overflow-hidden border-2 border-white bg-white">
-                    <img src={getNetworkIcon(token.symbol, token.address)} alt="Ethereum" className="w-full h-full" />
-                  </div>
+                  {getNetworkIcon() && (
+                    <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full overflow-hidden border-2 border-white bg-white">
+                      <img src={getNetworkIcon()!} alt="Ethereum" className="w-full h-full" />
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col">
                   <span className="text-lg font-semibold text-gray-900">{token.formattedBalance}</span>

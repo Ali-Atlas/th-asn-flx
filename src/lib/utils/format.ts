@@ -9,7 +9,7 @@ import { formatUnits, getAddress } from 'viem';
 export const formatTokenBalance = (
   balance: bigint,
   decimals: number,
-  displayDecimals = 6
+  _displayDecimals = 6  
 ): string => {
   const formatted = formatUnits(balance, decimals);
   const num = parseFloat(formatted);
@@ -22,23 +22,8 @@ export const formatTokenBalance = (
     return num.toExponential(2);
   }
   
-  // For small values, show more decimals
-  if (num < 1) {
-    return num.toFixed(displayDecimals);
-  }
-  
-  // For larger values, show fewer decimals
-  if (num >= 1000) {
-    return num.toLocaleString('en-US', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    });
-  }
-  
-  return num.toLocaleString('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 4,
-  });
+  // Just use toString() which removes trailing zeros automatically
+  return num.toString();
 };
 
 /**
